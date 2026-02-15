@@ -1,4 +1,4 @@
-#Online Retail Sales Analysis
+ Online Retail Sales Analysis
 
 Project Overview
 This project demonstrates an end-to-end retail data analysis workflow using MySQL and Power BI.
