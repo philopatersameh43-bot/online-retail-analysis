@@ -1,29 +1,38 @@
- Online Retail Sales Analysis
+SQL README — Online Retail (MySQL)
 
-Project Overview
-This project demonstrates an end-to-end retail data analysis workflow using MySQL and Power BI.
+Purpose
+This folder contains the SQL work used to prepare a **clean BI-ready dataset** for Power BI.
 
-The objective was to transform raw transaction-level data into structured, analysis-ready datasets and build an interactive dashboard to generate business insights.
+The goal in SQL is to:
+- Load the raw data into MySQL
+- Fix data type issues
+- Clean and filter records
+- Create a clean view that Power BI can import reliably
 
+Key Steps Performed
+1) Data Load (Staging Table)
+- Imported the CSV into a staging table (e.g., `online_retail_stage`)
+- Used appropriate data types for analytical use:
+  - `Quantity` as INT
+  - `UnitPrice` as DECIMAL (precision adjusted to prevent truncation)
 
- Tech Stack
- - MySQL (Data Cleaning & KPI Engineering)
- - Power BI (Data Visualization & Reporting)
+2) Cleaning Logic (BI-ready View)
+A clean view (e.g., `v_sales_clean`) was created to:
+- Remove cancelled invoices:
+  - `InvoiceNo NOT LIKE 'C%'`
+- Remove invalid transactions:
+  - `Quantity > 0`
+  - `UnitPrice > 0`
+- Remove missing CustomerID rows:
+  - `CustomerID IS NOT NULL AND TRIM(CustomerID) <> ''`
+  (Prevents blank keys breaking relationships in Power BI)
+- Fix CustomerID formatting issues (e.g., trailing `.0`) using trimming/casting
+- Create `Revenue`:
+  - `ROUND(Quantity * UnitPrice, 2) AS Revenue`
 
+Output
+Final SQL output is a clean table/view ready to import to Power BI:
+- consistent values
+- valid keys for relationships
+- revenue calculated correctly
 
-   Project Workflow
-1. Raw Data Import (MySQL)
-2. Data Quality Audit (Null values, duplicates, negative quantities, cancellations)
-3. Data Cleaning & Structuring
-4. KPI View Creation (Revenue, Orders, Customers)
-5. Dashboard Development in Power BI
-
- Key Business Insights
-- Revenue trends over time
-- Top-performing products
-- Sales by country
-- Order volume analysis
-- Customer activity patterns
-
-
- Repository Structure
