@@ -1,11 +1,11 @@
 Online Retail Store Insights (SQL + Power BI)
 
 Overview
-This project analyzes e-commerce transactional data (Online Retail) to understand sales performance over time and identify top products and countries by revenue. The workflow uses **SQL for cleaning/prep** and Power BI for modeling + interactive dashboarding**.
+This project analyzes e-commerce transactional data (Online Retail) to understand sales performance over time and identify top products and countries by revenue. The workflow uses SQL for cleaning/prep and Power BI for modeling + interactive dashboarding.
 
 What This Project Delivers
-- A BI-ready cleaned dataset** produced in MySQL (via a clean view)
-- A Star Schema** model in Power BI (Fact + Dimensions) for reliable filtering
+- A BI-ready cleaned dataset produced in MySQL (via a clean view)
+- A Star Schema model in Power BI (Fact + Dimensions) for reliable filtering
 - An interactive dashboard** with slicers (Year / Month / Country) and KPI tracking
 
 Dataset
@@ -16,8 +16,8 @@ Online Retail transactional dataset (typical fields):
 - CustomerID, Country
 
 Tools
-- **MySQL**: load + clean + prepare data (views)
-- **Power BI**: star schema model + DAX measures + interactive visuals
+- MySQL: load + clean + prepare data (views)
+- Power BI: star schema model + DAX measures + interactive visuals
 
 Workflow Summary
 1) SQL (MySQL)
