@@ -1,34 +1,52 @@
-Power BI Dashboard – Online Retail Analysis
+Power BI README — Online Retail Store Insights
 
-This folder contains the Power BI dashboard built using the cleaned dataset generated from the SQL pipeline.
+Purpose
+This folder contains the Power BI report built on top of the cleaned MySQL view.
 
-Objective
+Goal:
+- Build a **Star Schema model**
+- Create reusable **DAX measures**
+- Build an interactive dashboard with reliable filtering
 
-The dashboard provides business insights into retail transaction performance and sales trends.
+Data Source
+Power BI connects to MySQL and imports the cleaned view:
+- `v_sales_clean`
 
-Key Metrics Displayed
+Data Modeling (Star Schema)
+Fact Table
+- `Fact_Sales` (transaction-level sales records)
 
-- Total Revenue
-- Total Orders
-- Total Quantity Sold
-- Monthly Sales Trends
-- Top Products by Revenue
-- Sales by Country
+Dimension Tables
+Created from Fact using Reference queries + Remove Duplicates:
+- `Dim_Product` (unique by StockCode)
+- `Dim_Customer` (unique by CustomerID)
+- `Dim_Country` (unique by Country)
+- `Dim_Date` (calendar table created with DAX)
 
-Features
+Important Modeling Fixes
+- Created `InvoiceDateOnly` in Fact_Sales (Date without time) for clean relationship to Dim_Date
+- Fixed many-to-many warning by ensuring Dim_Product has unique StockCode
+- Fixed sorting issues:
+  - `Year-Month` sorted by a numeric `YearMonthSort`
+  - `Month Name` sorted by `Month Number`
 
-- Interactive slicers (Date, Country)
-- KPI cards
-- Time-based trend analysis
-- Clean and structured dashboard layout
+Measures (DAX)
+- Total Revenue** = SUM(Fact_Sales[Revenue])
+- Total Quantity** = SUM(Fact_Sales[Quantity])
+- Total Orders** = DISTINCTCOUNT(Fact_Sales[InvoiceNo])
 
-Tools Used
+Dashboard Pages / Visuals
+Main page includes:
+- KPI cards: Total Revenue, Total Orders, Total Quantity
+- Line chart: Monthly Revenue Trend
+- Bar chart: Top 10 Products by Revenue
+- Column/Bar chart: Top 10 Countries by Revenue
+- Slicers: Year, Month Name, Country
 
-- Power BI Desktop
-- Data modeling
-- Built-in aggregations
-- Interactive filtering & slicers
+Interactivity
+All slicers come from dimension tables (best practice):
+- Dim_Date, Dim_Country, etc.
+Filters propagate through relationships to Fact_Sales, and measures recalculate dynamically.
 
-File Included
-
-- `online_retail.pbix` – Main Power BI dashboard file
+File
+- `Online_Retail_ii.pbix`
